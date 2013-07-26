@@ -161,4 +161,27 @@ $data1 .= "<tr><td>Server Uptime        </td><td>$uptime                     </t
 $data1 .= "</table>"; 
 echo $data1;  
 
+
+if (!isset($_GET['showtraffic']) || $_GET['showtraffic'] ==  false) die();
+
+$data2 .= " 
+<br> 
+    <center> 
+     <div style=\"border-bottom:1px #999999 solid;width:480;\"><b> 
+       <font size='1' color='#3896CC'>Traffic Information</font></b> 
+     </div>  
+   </center><BR>"; 
+
+$data2 .= "<table width='480' border='1' cellspacing='0' cellpadding='3' style='border-collapse:collapse'  
+
+bordercolor='#333333' align='center'>"; 
+$data2 .="<tr><td><pre>";
+$traffic_arr = array();
+exec('vnstat -' . $_GET['showtraffic'], $traffic_arr, $status);
+
+$traffic = implode("\n", $traffic_arr);
+
+$data2 .="$traffic</pre></td></tr>";
+$data2 .='</table>';
+echo $data2;
 ?>
