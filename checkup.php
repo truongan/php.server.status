@@ -33,7 +33,7 @@ Original author:
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */  
-  $data = "";
+ $data = "";
 $data .= "
 <style>
 td,body
@@ -61,26 +61,23 @@ $port[3] = "3306";     $service[3] = "MYSQL";                   $ip[3] ="";
 $port[4] = "22";       $service[4] = "Open SSH";				$ip[4] ="";
 //$port[5] = "8082";     $service[5] = "commafeed";             	$ip[5] ="";
 $port[5] = "9091";     $service[5] = "Transmission";             	$ip[5] ="";
-$//port[6] = "2095";     $service[6] = "Webmail";                 $ip[6] ="";
+//$port[6] = "2095";     $service[6] = "Webmail";                 $ip[6] ="";
 //$port[7] = "2082";     $service[7] = "Cpanel";                  $ip[7] ="";
 $port[8] = "80";       $service[8] = "Internet Connection";     $ip[8] ="google.com";
 //$port[9] = "2086";     $service[9] = "WHM";                     $ip[9] ="";
 
 
-//count arrays
+
 $ports = count($port);
 $ports = $ports + 1;
 $count = 1;
 
 //beggin table for status
-
 $data .= "<table width='480' border='1' cellspacing='0' cellpadding='3' style='border-collapse:collapse' bordercolor='#333333' align='center'>";
-
-while($count < $ports){
-
-	 if($ip[$count]==""){
+foreach ($port  as $count => $value) {
+	if($ip[$count]==""){
 	   $ip[$count] = "localhost";
-	 }
+	}
 
 		$fp = @fsockopen("$ip[$count]", $port[$count], $errno, $errstr, $timeout);
 		if (!$fp) {
@@ -125,7 +122,7 @@ $uptime = explode(' up ', $loadresult);
 $uptime = explode(',', $uptime[1]);
 $uptime = $uptime[0].', '.$uptime[1];
 
-  //Get the disk space
+//Get the disk space
 function getSymbolByQuantity($bytes) {
 	$symbol = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB');
 	$exp = floor(log($bytes)/log(1024));
@@ -133,7 +130,7 @@ function getSymbolByQuantity($bytes) {
 	return sprintf('%.2f '.$symbol[$exp], ($bytes/pow(1024, floor($exp))));
 }
 
-$dSisk_space = getSymbolByQuantity(disk_total_space("/"));
+$disk_space = getSymbolByQuantity(disk_total_space("/"));
 $disk_free = getSymbolByQuantity(disk_free_space("/"));
 $disk_free_precent = round(disk_free_space("/")*1.0/disk_total_space("/")*100,2);
 
@@ -148,7 +145,10 @@ $free_mem_percent = round($free_mem*1.0/$total_mem*100,2);
 $tom_mem_arr = array();
 exec('ps -e -ocomm,rss | sort -b -k2,2n 2>&1', $tom_mem_arr, $status);
 
-$top_mem = implode(' KiB <br/>', array_slice( $tom_mem_arr, - 5, 5) );
+//-- The number of processes to display in Top RAM user
+$i = 5;
+
+$top_mem = implode(' KiB <br/>', array_slice( $tom_mem_arr, - $i, $i) );
 $top_mem = "<pre><b>COMMAND\t\tResident memory</b><br/>" . $top_mem . " KiB</pre>";
   
   
