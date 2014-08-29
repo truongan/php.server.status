@@ -143,20 +143,25 @@ $free_mem_percent = round($free_mem*1.0/$total_mem*100,2);
 
 //Get top mem usage
 $tom_mem_arr = array();
+$top_cpu_use = array();
 exec('ps -e -ocomm,rss | sort -b -k2,2n 2>&1', $tom_mem_arr, $status);
+exec('ps -e -ocomm,pcpu | sort -b -k2,2n 2>&1', $top_cpu_use, $status);
 
 //-- The number of processes to display in Top RAM user
 $i = 5;
 
 $top_mem = implode(' KiB <br/>', array_slice( $tom_mem_arr, - $i, $i) );
 $top_mem = "<pre><b>COMMAND\t\tResident memory</b><br/>" . $top_mem . " KiB</pre>";
-  
-  
+
+$top_cpu = implode(' KiB <br/>', array_slice( $top_cpu_use, - $i, $i) );
+$top_cpu = "<pre><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " KiB</pre>";
+
 $data1 .= "<tr><td>Server Load Averages </td><td>$avgs[1], $avgs[2], $avgs[3]</td>\n";
 $data1 .= "<tr><td>Server Uptime        </td><td>$uptime                     </td></tr>";
 $data1 .= "<tr><td>Disk free        </td><td>$disk_free/$disk_space = $disk_free_precent%         </td></tr>";
 $data1 .= "<tr><td>RAM free        </td><td>$free_mem MiB/$total_mem MiB = $free_mem_percent%         </td></tr>";
 $data1 .= "<tr><td>Top RAM user    </td><td>$top_mem         </td></tr>";
+$data1 .= "<tr><td>Top RAM user    </td><td>$top_cpu         </td></tr>";
 $data1 .= "</table>";
 echo $data1;  
 
