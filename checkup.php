@@ -55,39 +55,34 @@ td,body
 $timeout = "1";
 
 //set service checks
-$port[1] = "80";       $service[1] = "Apache";                  $ip[1] ="";
-$port[2] = "21";       $service[2] = "FTP";                     $ip[2] ="";
-$port[3] = "3306";     $service[3] = "MYSQL";                   $ip[3] ="";
-$port[4] = "22";       $service[4] = "Open SSH";				$ip[4] ="";
-//$port[5] = "8082";     $service[5] = "commafeed";             	$ip[5] ="";
-$port[5] = "9091";     $service[5] = "Transmission";             	$ip[5] ="";
-//$port[6] = "2095";     $service[6] = "Webmail";                 $ip[6] ="";
-//$port[7] = "2082";     $service[7] = "Cpanel";                  $ip[7] ="";
-$port[8] = "80";       $service[8] = "Internet Connection";     $ip[8] ="google.com";
-//$port[9] = "2086";     $service[9] = "WHM";                     $ip[9] ="";
+$services = array();
 
 
+$services[] = array("port" => "80",       "service" => "Apache",                  "ip" => "") ;
+$services[] = array("port" => "21",       "service" => "FTP",                     "ip" => "") ;
+$services[] = array("port" => "3306",     "service" => "MYSQL",                   "ip" => "") ;
+$services[] = array("port" => "22",       "service" => "Open SSH",				"ip" => "") ;
+$services[] = array("port" => "9091",     "service" => "Transmission",             	"ip" => "") ;
+$services[] = array("port" => "80",       "service" => "Internet Connection",     "ip" => "google.com") ;
+$services[] = array("port" => "8082",     "service" => "commafeed",             	"ip" => "") ;
+$services[] = array("port" => "8083",     "service" => "Vesta panel",             	"ip" => "") ;
 
-$ports = count($port);
-$ports = $ports + 1;
-$count = 1;
 
 //beggin table for status
 $data .= "<table width='480' border='1' cellspacing='0' cellpadding='3' style='border-collapse:collapse' bordercolor='#333333' align='center'>";
-foreach ($port  as $count => $value) {
-	if($ip[$count]==""){
-	   $ip[$count] = "localhost";
+foreach ($services  as $service) {
+	if($service['ip']==""){
+	   $service['ip'] = "localhost";
 	}
 
-		$fp = @fsockopen("$ip[$count]", $port[$count], $errno, $errstr, $timeout);
-		if (!$fp) {
-			$data .= "<tr><td>$service[$count]</td><td bgcolor='#FFC6C6'>Offline </td></tr>";
-		  //fclose($fp);
-		} else {
-			$data .= "<tr><td>$service[$count]</td><td bgcolor='#D9FFB3'>Online</td></tr>";
-			fclose($fp);
-		}
-	$count++;
+	$fp = @fsockopen($service['ip'], $service['port'], $errno, $errstr, $timeout);
+	if (!$fp) {
+		$data .= "<tr><td>" . $service['service'] . "</td><td bgcolor='#FFC6C6'>Offline </td></tr>";
+	  //fclose($fp);
+	} else {
+		$data .= "<tr><td>" . $service['service'] . "</td><td bgcolor='#D9FFB3'>Online</td></tr>";
+		fclose($fp);
+	}
 
 }  
 
