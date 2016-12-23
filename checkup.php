@@ -138,8 +138,10 @@ $disk_free_precent = round(disk_free_space("/")*1.0/disk_total_space("/")*100,2)
 $total_mem = preg_split('/ +/', @exec('grep MemTotal /proc/meminfo'));
 $total_mem = $total_mem[1];
 $free_mem = preg_split('/ +/', @exec('grep MemFree /proc/meminfo'));
+$cache_mem = preg_split('/ +/', @exec('grep ^Cached /proc/meminfo'));
 
-$free_mem = $free_mem[1];
+$free_mem = $free_mem[1] + $cache_mem[1];
+
 $free_mem_percent = round($free_mem*1.0/$total_mem*100,2);
 
 $free_mem = getSymbolByQuantity($free_mem*1024);
