@@ -33,7 +33,7 @@ Original author:
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */  
- $data = "";
+$data = "";
 $data .= "
 <style>
 td,body
@@ -55,6 +55,11 @@ td,body
 $timeout = "1";
 
 //set service checks
+/* 
+The script will open a socket to the following service to test for connection.
+Does not test the fucntionality, just the ability to connect
+Each service can have a name, port and the Unix domain it run on (default to localhost)
+*/
 $services = array();
 
 
@@ -68,7 +73,7 @@ $services[] = array("port" => "8082",     "service" => "commafeed",             
 $services[] = array("port" => "8083",     "service" => "Vesta panel",             	"ip" => "") ;
 
 
-//beggin table for status
+//begin table for status
 $data .= "<table width='480' border='1' cellspacing='0' cellpadding='3' style='border-collapse:collapse' bordercolor='#333333' align='center'>";
 foreach ($services  as $service) {
 	if($service['ip']==""){
@@ -85,12 +90,13 @@ foreach ($services  as $service) {
 	}
 
 }  
-
 //close table
 $data .= "</table>";
 
 echo $data;
- //
+
+
+//
 // SERVER INFORMATION
 //
 
@@ -175,6 +181,10 @@ $data1 .= "<tr><td>Top RAM user    </td><td>$top_mem         </td></tr>";
 $data1 .= "<tr><td>Top CPU user    </td><td>$top_cpu         </td></tr>";
 $data1 .= "</table>";
 echo $data1;  
+
+/*
+Display bandwidth statistic, require vnstat installed and properly configured.
+*/
 
 
 if (!isset($_GET['showtraffic']) || $_GET['showtraffic'] ==  false) die();
