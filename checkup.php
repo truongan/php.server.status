@@ -6,7 +6,6 @@
  * @copyright   2011, The authors
  * @license     GNU AFFERO GENERAL PUBLIC LICENSE
  *        http://www.gnu.org/licenses/agpl-3.0.html
- * @link    https://github.com/cntn02/Semantic-document-base
  *
  * Jul 27, 2013
 
