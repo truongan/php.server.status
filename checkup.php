@@ -130,9 +130,9 @@ function getSymbolByQuantity($bytes) {
 	return sprintf('%.2f '.$symbol[$exp], ($bytes/pow(1024, floor($exp))));
 }
 
-$disk_space = getSymbolByQuantity(disk_total_space("/"));
-$disk_free = getSymbolByQuantity(disk_free_space("/"));
-$disk_free_precent = round(disk_free_space("/")*1.0/disk_total_space("/")*100,2);
+$disk_space = getSymbolByQuantity(disk_total_space(getcwd()));
+$disk_free = getSymbolByQuantity(disk_free_space(getcwd()));
+$disk_free_precent = round(disk_free_space(getcwd())*1.0/disk_total_space(getcwd())*100,2);
 
 //Get ram usage
 $total_mem = preg_split('/ +/', @exec('grep MemTotal /proc/meminfo'));
