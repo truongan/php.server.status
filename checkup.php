@@ -130,9 +130,30 @@ function getSymbolByQuantity($bytes) {
 	return sprintf('%.2f '.$symbol[$exp], ($bytes/pow(1024, floor($exp))));
 }
 
-$disk_space = getSymbolByQuantity(disk_total_space(getcwd()));
-$disk_free = getSymbolByQuantity(disk_free_space(getcwd()));
-$disk_free_precent = round(disk_free_space(getcwd())*1.0/disk_total_space(getcwd())*100,2);
+function get_disk_free_status($disks){
+	$str = "<pre>";
+	$max = 5;
+	foreach($disks as $disk){
+		if(strlen($disk["name"]) > $max) 
+			$max = strlen($disk["name"]);
+	}
+
+	$number_length = 12;
+	$str .= "<b>".str_pad("Name",  $max + 3, " ")."</b>" . "<b>".str_pad("Free",  $number_length, " ")."</b>" . "<b>".str_pad("Total",  $number_length, " ")."</b>" . "<b>".str_pad("%",  $number_length, " ")."</b>\n";
+	
+	foreach($disks as $disk){
+		$disk_space = disk_total_space($disk["path"]);
+		$disk_free = disk_free_space($disk["path"]);
+
+		$disk_free_precent = round($disk_free*1.0 / $disk_space*100, 2);
+		$str .= str_pad($disk["name"],  $max + 3, " ") . str_pad(getSymbolByQuantity($disk_free),  $number_length, " ") . str_pad(getSymbolByQuantity($disk_space),  $number_length, " ") . str_pad($disk_free_precent,  $number_length, " ");
+	}
+	return $str;
+}
+
+
+
+
 
 //Get ram usage
 $total_mem = preg_split('/ +/', @exec('grep MemTotal /proc/meminfo'));
@@ -174,7 +195,12 @@ $top_cpu = "<pre><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " %</pre>"
 
 $data1 .= "<tr><td>Server Load Averages </td><td>$avgs[1], $avgs[2], $avgs[3]</td>\n";
 $data1 .= "<tr><td>Server Uptime        </td><td>$uptime                     </td></tr>";
-$data1 .= "<tr><td>Disk free        </td><td>$disk_free / $disk_space = $disk_free_precent%         </td></tr>";
+
+
+$disks = array();
+$disks[] = array("name" => "local" , "path" => getcwd()) ;
+$data1 .= "<tr><td>Disk free        </td><td>" . get_disk_free_status($disks) . "</td></tr>";
+
 $data1 .= "<tr><td>RAM free        </td><td>$free_mem / $total_mem = $free_mem_percent%         </td></tr>";
 $data1 .= "<tr><td>Top RAM user    </td><td>$top_mem         </td></tr>";
 $data1 .= "<tr><td>Top CPU user    </td><td>$top_cpu         </td></tr>";
