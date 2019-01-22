@@ -68,14 +68,14 @@ $services[] = array("port" => "80",       "service" => "Apache",                
 $services[] = array("port" => "21",       "service" => "FTP",                     "ip" => "") ;
 $services[] = array("port" => "3306",     "service" => "MYSQL",                   "ip" => "") ;
 $services[] = array("port" => "22",       "service" => "Open SSH",				"ip" => "") ;
-$services[] = array("port" => "9091",     "service" => "Transmission",             	"ip" => "") ;
+$services[] = array("port" => "7096",     "service" => "Deluge",             	"ip" => "") ;
 $services[] = array("port" => "80",       "service" => "Internet Connection",     "ip" => "google.com") ;
-$services[] = array("port" => "8082",     "service" => "commafeed",             	"ip" => "") ;
+$services[] = array("port" => "8112",     "service" => "Deluge Web",             	"ip" => "") ;
 $services[] = array("port" => "8083",     "service" => "Vesta panel",             	"ip" => "") ;
 
 
 //begin table for status
-$data .= "<table  class='table table-striped table-sm '><thead><tr><th>Service</th><th>Status</th></tr></thead>";
+$data .= "<table  class='table table-striped table-sm '><thead><tr><th>Service</th><th>Port</th><th>Status</th></tr></thead>";
 foreach ($services  as $service) {
 	if($service['ip']==""){
 	   $service['ip'] = "localhost";
@@ -83,10 +83,10 @@ foreach ($services  as $service) {
 
 	$fp = @fsockopen($service['ip'], $service['port'], $errno, $errstr, $timeout);
 	if (!$fp) {
-		$data .= "<tr ><td>" . $service['service'] . "</td><td class='table-danger'>Offline </td></tr>";
+		$data .= "<tr ><td>" . $service['service'] . "</td><td>". $service['port']."</td><td class='table-danger'>Offline </td></tr>";
 	  //fclose($fp);
 	} else {
-		$data .= "<tr><td>" . $service['service'] . "</td><td class='table-success'>Online</td></tr>";
+		$data .= "<tr><td>" . $service['service'] . "</td><td>". $service['port']."</td><td class='table-success'>Online</td></tr>";
 		fclose($fp);
 	}
 
