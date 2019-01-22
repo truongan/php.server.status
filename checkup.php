@@ -44,10 +44,10 @@ Original author:
 */  
 $data = "";
 $data .= '
-<div class="card mb-5">
-  <h4 class="card-header text-center">
+<div class="card mb-3">
+  <h6 class="card-header text-center">
     Service status
-  </h4>
+  </h6>
   <div class="card-body">
 ';
 
@@ -68,9 +68,9 @@ $services[] = array("port" => "80",       "service" => "Apache",                
 $services[] = array("port" => "21",       "service" => "FTP",                     "ip" => "") ;
 $services[] = array("port" => "3306",     "service" => "MYSQL",                   "ip" => "") ;
 $services[] = array("port" => "22",       "service" => "Open SSH",				"ip" => "") ;
-$services[] = array("port" => "7096",     "service" => "Deluge",             	"ip" => "") ;
-$services[] = array("port" => "80",       "service" => "Internet Connection",     "ip" => "google.com") ;
+$services[] = array("port" => "58846",     "service" => "Deluge",             	"ip" => "") ;
 $services[] = array("port" => "8112",     "service" => "Deluge Web",             	"ip" => "") ;
+$services[] = array("port" => "80",       "service" => "Internet Connection",     "ip" => "google.com") ;
 $services[] = array("port" => "8083",     "service" => "Vesta panel",             	"ip" => "") ;
 
 
@@ -109,10 +109,10 @@ echo $data;
 
 $data1 = "";
 $data1 .= '
-<div class="card mb-5">
-  <h4 class="card-header text-center">
+<div class="card mb-3">
+  <h6 class="card-header text-center">
     Service status
-  </h4>
+  </h6>
   <div class="card-body">
 ';
 
@@ -242,13 +242,13 @@ if (!isset($_GET['showtraffic']) || $_GET['showtraffic'] ==  false) die();
 $data2 = "";
 $data2 .=  '
 <div class="card">
-  <h4 class="card-header text-center">
+  <h6 class="card-header text-center">
     Service status
-  </h4>
+  </h6>
   <div class="card-body">
 ';
 
-$data2 .= "<table  class='table table-sm '>";
+$data2 .= "<table  class='table table-sm text-center'>";
 $data2 .="<tr><td><pre>";
 $traffic_arr = array();
 exec('vnstat -' . $_GET['showtraffic'], $traffic_arr, $status);
