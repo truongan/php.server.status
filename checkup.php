@@ -48,7 +48,7 @@ $data .= '
   <h6 class="card-header text-center">
     Service status
   </h6>
-  <div class="card-body">
+  <div class="card-body pb-0">
 ';
 
 
@@ -75,7 +75,7 @@ $services[] = array("port" => "8083",     "service" => "Vesta panel",           
 
 
 //begin table for status
-$data .= "<table  class='table table-striped table-sm '><thead><tr><th>Service</th><th>Port</th><th>Status</th></tr></thead>";
+$data .= "<small><table  class='table table-striped table-sm '><thead><tr><th>Service</th><th>Port</th><th>Status</th></tr></thead>";
 foreach ($services  as $service) {
 	if($service['ip']==""){
 	   $service['ip'] = "localhost";
@@ -92,7 +92,7 @@ foreach ($services  as $service) {
 
 }  
 //close table
-$data .= "</table>";
+$data .= "</table></small>";
 $data .= '
   </div>
 </div>
@@ -113,11 +113,11 @@ $data1 .= '
   <h6 class="card-header text-center">
     Service status
   </h6>
-  <div class="card-body">
+  <div class="card-body pb-0">
 ';
 
 
-$data1 .= "<table  class='table table-sm'>";
+$data1 .= "<table  class='table table-sm mb-0'>";
 
 //GET SERVER LOADS
 $loadresult = @exec('uptime');  
@@ -210,7 +210,7 @@ $top_mem = "<pre><b>COMMAND\t\tResident memory</b><br/>" . $top_mem . " KiB</pre
 $top_cpu = implode(' % <br/>', $top_cpu_use );
 $top_cpu = "<pre><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " %</pre>";
 
-$data1 .= "<tr><td>average load</td><td>$avgs[1], $avgs[2], $avgs[3]</td>\n";
+$data1 .= "<tr><td>Average load</td><td>$avgs[1], $avgs[2], $avgs[3]</td>\n";
 $data1 .= "<tr><td>Uptime</td><td>$uptime                     </td></tr>";
 
 
@@ -219,8 +219,8 @@ $disks[] = array("name" => "local" , "path" => getcwd()) ;
 $data1 .= "<tr><td>Disk free        </td><td>" . get_disk_free_status($disks) . "</td></tr>";
 
 $data1 .= "<tr><td>RAM free        </td><td>". format_storage_info($total_mem *1024, $free_mem *1024, '') ."</td></tr>";
-$data1 .= "<tr><td>Top RAM user    </td><td>$top_mem         </td></tr>";
-$data1 .= "<tr><td>Top CPU user    </td><td>$top_cpu         </td></tr>";
+$data1 .= "<tr><td>Top RAM user    </td><td><small>$top_mem</small></td></tr>";
+$data1 .= "<tr><td>Top CPU user    </td><td><small>$top_cpu</small></td></tr>";
 
 $data1 .= "</table>";
 $data1 .= '
