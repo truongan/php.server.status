@@ -148,7 +148,7 @@ function format_storage_info($disk_space, $disk_free, $disk_name){
 	$str = "";
 	$disk_free_precent = 100 - round($disk_free*1.0 / $disk_space*100, 2);
 		$str .= '<div class="col p-0 d-inline-flex">';
-		$str .= "<span class='mr-2'>" . $disk_name . " " . getSymbolByQuantity($disk_free) . '/'. getSymbolByQuantity($disk_space) ."</span>";
+		$str .= "<span class='mr-2'>" . badge($disk_name,'secondary') .' '. getSymbolByQuantity($disk_free) . '/'. getSymbolByQuantity($disk_space) ."</span>";
 		$str .= '
 <div class="progress flex-grow-1 align-self-center">
   <div class="progress-bar progress-bar-striped progress-bar-animated ';
@@ -160,6 +160,7 @@ function format_storage_info($disk_space, $disk_free, $disk_name){
 	return $str;
 
 }
+
 function get_disk_free_status($disks){
 	$str="";
 	$max = 5;
@@ -177,7 +178,9 @@ function get_disk_free_status($disks){
 	}
 	return $str;
 }
-
+function badge($str, $type){
+	return "<span class='badge badge-" . $type . " ' >$str</span>";
+}
 
 //Get ram usage
 $total_mem = preg_split('/ +/', @exec('grep MemTotal /proc/meminfo'));
@@ -212,12 +215,20 @@ $top_mem = "<pre class='mb-0'><b>COMMAND\t\tResident memory</b><br/>" . $top_mem
 $top_cpu = implode(' % <br/>', $top_cpu_use );
 $top_cpu = "<pre class='mb-0'><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " %</pre>";
 
-$data1 .= "<tr><td>Average load</td><td>$avgs[1], $avgs[2], $avgs[3]</td>\n";
+$data1 .= "<tr><td>Average load</td><td><h5>". badge($avgs[1],'secondary'). ' ' .badge($avgs[2], 'secondary') . ' ' . badge( $avgs[3], 'secondary') . " </h5></td>\n";
 $data1 .= "<tr><td>Uptime</td><td>$uptime                     </td></tr>";
 
 
 $disks = array();
+
+/*
+* The disks array list all mountpoint you wan to check freespace
+* Display name and path to the moutpoint have to be provide, you can 
+*/
 $disks[] = array("name" => "local" , "path" => getcwd()) ;
+// $disks[] = array("name" => "Your disk name" , "path" => '/mount/point/to/that/disk') ;
+
+
 $data1 .= "<tr><td>Disk free        </td><td>" . get_disk_free_status($disks) . "</td></tr>";
 
 $data1 .= "<tr><td>RAM free        </td><td>". format_storage_info($total_mem *1024, $free_mem *1024, '') ."</td></tr>";
