@@ -45,9 +45,9 @@ Original author:
 $data = "";
 $data .= '
 <div class="card my-2">
-  <h6 class="card-header text-center">
+  <h4 class="card-header text-center">
     Service status
-  </h6>
+  </h4>
   <div class="card-body pb-0">
 ';
 
@@ -257,7 +257,7 @@ $data2 .=  '
   <h4 class="card-header text-center">
     vnstat Network traffic
   </h4>
-  <div class="card-body">
+  <div class="card-body text-center">
 ';
 
 
