@@ -111,10 +111,10 @@ echo $data;
 $data1 = "";
 $data1 .= '
 <div class="card mb-2">
-  <h6 class="card-header text-center">
-    Service status
-  </h6>
-  <div class="card-body pb-0">
+  <h4 class="card-header text-center">
+    Server information
+  </h4>
+  <div class="card-body">
 ';
 
 
@@ -255,10 +255,10 @@ if (!isset($_GET['showtraffic']) || $_GET['showtraffic'] ==  false) die();
 $data2 = "";
 $data2 .=  '
 <div class="card mb-2">
-  <h6 class="card-header text-center">
-    Service status
-  </h6>
-  <div class="card-body text-center">
+  <h4 class="card-header text-center">
+    vnstat Network traffic
+  </h4>
+  <div class="card-body">
 ';
 
 
