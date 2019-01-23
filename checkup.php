@@ -111,7 +111,7 @@ $data1 = "";
 $data1 .= '
 <div class="card mb-5">
   <h4 class="card-header text-center">
-    Service status
+    Server information
   </h4>
   <div class="card-body">
 ';
@@ -243,7 +243,7 @@ $data2 = "";
 $data2 .=  '
 <div class="card">
   <h4 class="card-header text-center">
-    Service status
+    vnstat Network traffic
   </h4>
   <div class="card-body">
 ';
