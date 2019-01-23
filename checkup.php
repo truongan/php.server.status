@@ -64,11 +64,13 @@ Each service can have a name, port and the Unix domain it run on (default to loc
 $services = array();
 
 
-$services[] = array("port" => "80",       "service" => "Apache",                  "ip" => "") ;
+$services[] = array("port" => "9000",       "service" => "php-fpm",                  "ip" => "") ;
+$services[] = array("port" => "80",       "service" => "Nginx",                  "ip" => "51.15.1.76") ;
+$services[] = array("port" => "6379",       "service" => "Redis",                  "ip" => "") ;
 $services[] = array("port" => "21",       "service" => "FTP",                     "ip" => "") ;
 $services[] = array("port" => "3306",     "service" => "MYSQL",                   "ip" => "") ;
 $services[] = array("port" => "22",       "service" => "Open SSH",				"ip" => "") ;
-$services[] = array("port" => "58846",     "service" => "Deluge",             	"ip" => "") ;
+$services[] = array("port" => "7690",     "service" => "Deluge",             	"ip" => "") ;
 $services[] = array("port" => "8112",     "service" => "Deluge Web",             	"ip" => "") ;
 $services[] = array("port" => "80",       "service" => "Internet Connection",     "ip" => "google.com") ;
 $services[] = array("port" => "8083",     "service" => "Vesta panel",             	"ip" => "") ;
