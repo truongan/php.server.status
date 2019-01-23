@@ -216,7 +216,15 @@ $data1 .= "<tr><td>Uptime</td><td>$uptime                     </td></tr>";
 
 
 $disks = array();
+
+/*
+* The disks array list all mountpoint you wan to check freespace
+* Display name and path to the moutpoint have to be provide, you can 
+*/
 $disks[] = array("name" => "local" , "path" => getcwd()) ;
+// $disks[] = array("name" => "Your disk name" , "path" => '/mount/point/to/that/disk') ;
+
+
 $data1 .= "<tr><td>Disk free        </td><td>" . get_disk_free_status($disks) . "</td></tr>";
 
 $data1 .= "<tr><td>RAM free        </td><td>". format_storage_info($total_mem *1024, $free_mem *1024, '') ."</td></tr>";
