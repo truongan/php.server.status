@@ -44,11 +44,11 @@ Original author:
 */  
 $data = "";
 $data .= '
-<div class="card mb-5">
-  <h4 class="card-header text-center">
+<div class="card my-2">
+  <h6 class="card-header text-center">
     Service status
-  </h4>
-  <div class="card-body">
+  </h6>
+  <div class="card-body pb-0">
 ';
 
 
@@ -68,14 +68,14 @@ $services[] = array("port" => "80",       "service" => "Apache",                
 $services[] = array("port" => "21",       "service" => "FTP",                     "ip" => "") ;
 $services[] = array("port" => "3306",     "service" => "MYSQL",                   "ip" => "") ;
 $services[] = array("port" => "22",       "service" => "Open SSH",				"ip" => "") ;
-$services[] = array("port" => "9091",     "service" => "Transmission",             	"ip" => "") ;
+$services[] = array("port" => "58846",     "service" => "Deluge",             	"ip" => "") ;
+$services[] = array("port" => "8112",     "service" => "Deluge Web",             	"ip" => "") ;
 $services[] = array("port" => "80",       "service" => "Internet Connection",     "ip" => "google.com") ;
-$services[] = array("port" => "8082",     "service" => "commafeed",             	"ip" => "") ;
 $services[] = array("port" => "8083",     "service" => "Vesta panel",             	"ip" => "") ;
 
 
 //begin table for status
-$data .= "<table  class='table table-striped table-sm '><thead><tr><th>Service</th><th>Status</th></tr></thead>";
+$data .= "<small><table  class='table table-striped table-sm '><thead><tr><th>Service</th><th>Port</th><th>Status</th></tr></thead>";
 foreach ($services  as $service) {
 	if($service['ip']==""){
 	   $service['ip'] = "localhost";
@@ -83,16 +83,16 @@ foreach ($services  as $service) {
 
 	$fp = @fsockopen($service['ip'], $service['port'], $errno, $errstr, $timeout);
 	if (!$fp) {
-		$data .= "<tr ><td>" . $service['service'] . "</td><td class='table-danger'>Offline </td></tr>";
+		$data .= "<tr ><td>" . $service['service'] . "</td><td>". $service['port']."</td><td class='table-danger'>Offline </td></tr>";
 	  //fclose($fp);
 	} else {
-		$data .= "<tr><td>" . $service['service'] . "</td><td class='table-success'>Online</td></tr>";
+		$data .= "<tr><td>" . $service['service'] . "</td><td>". $service['port']."</td><td class='table-success'>Online</td></tr>";
 		fclose($fp);
 	}
 
 }  
 //close table
-$data .= "</table>";
+$data .= "</table></small>";
 $data .= '
   </div>
 </div>
@@ -109,7 +109,7 @@ echo $data;
 
 $data1 = "";
 $data1 .= '
-<div class="card mb-5">
+<div class="card mb-2">
   <h4 class="card-header text-center">
     Server information
   </h4>
@@ -117,7 +117,7 @@ $data1 .= '
 ';
 
 
-$data1 .= "<table  class='table table-sm'>";
+$data1 .= "<table  class='table table-sm mb-0'>";
 
 //GET SERVER LOADS
 $loadresult = @exec('uptime');  
@@ -137,15 +137,17 @@ function getSymbolByQuantity($bytes) {
 	return sprintf('%.2f<small>'.$symbol[$exp].'</small>', ($bytes/pow(1024, floor($exp))));
 }
 function percent_to_color($p){
-	if($p < 40) return 'success';
-	if($p < 70) return 'warning';
+	if($p < 30) return 'success';
+	if($p < 45) return 'info';
+	if($p < 60) return 'primary';
+	if($p < 75) return 'warning';
 	return 'danger';
 }
 function format_storage_info($disk_space, $disk_free, $disk_name){
 	$str = "";
 	$disk_free_precent = 100 - round($disk_free*1.0 / $disk_space*100, 2);
 		$str .= '<div class="col p-0 d-inline-flex">';
-		$str .= "<span class='mr-2'>" . $disk_name . " " . getSymbolByQuantity($disk_free) . '/'. getSymbolByQuantity($disk_space) ."</span>";
+		$str .= "<span class='mr-2'>" . badge($disk_name,'secondary') .' '. getSymbolByQuantity($disk_free) . '/'. getSymbolByQuantity($disk_space) ."</span>";
 		$str .= '
 <div class="progress flex-grow-1 align-self-center">
   <div class="progress-bar progress-bar-striped progress-bar-animated ';
@@ -157,6 +159,7 @@ function format_storage_info($disk_space, $disk_free, $disk_name){
 	return $str;
 
 }
+
 function get_disk_free_status($disks){
 	$str="";
 	$max = 5;
@@ -174,7 +177,9 @@ function get_disk_free_status($disks){
 	}
 	return $str;
 }
-
+function badge($str, $type){
+	return "<span class='badge badge-" . $type . " ' >$str</span>";
+}
 
 //Get ram usage
 $total_mem = preg_split('/ +/', @exec('grep MemTotal /proc/meminfo'));
@@ -198,29 +203,36 @@ $i = 5;
 -k to specify sorting order: - is desc order follow by column name
 -o to specify output format, it's a list of column name. = suppress the display of column name
 head to get only the first few lines 
-	
 */
 exec("ps -e k-rss -ocomm=,rss= | head -n $i", $tom_mem_arr, $status);
 exec("ps -e k-pcpu -ocomm=,pcpu= | head -n $i", $top_cpu_use, $status);
 
 
 $top_mem = implode(' KiB <br/>', $tom_mem_arr );
-$top_mem = "<pre><b>COMMAND\t\tResident memory</b><br/>" . $top_mem . " KiB</pre>";
+$top_mem = "<pre class='mb-0'><b>COMMAND\t\tResident memory</b><br/>" . $top_mem . " KiB</pre>";
 
 $top_cpu = implode(' % <br/>', $top_cpu_use );
-$top_cpu = "<pre><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " %</pre>";
+$top_cpu = "<pre class='mb-0'><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " %</pre>";
 
-$data1 .= "<tr><td>average load</td><td>$avgs[1], $avgs[2], $avgs[3]</td>\n";
+$data1 .= "<tr><td>Average load</td><td><h5>". badge($avgs[1],'secondary'). ' ' .badge($avgs[2], 'secondary') . ' ' . badge( $avgs[3], 'secondary') . " </h5></td>\n";
 $data1 .= "<tr><td>Uptime</td><td>$uptime                     </td></tr>";
 
 
 $disks = array();
+
+/*
+* The disks array list all mountpoint you wan to check freespace
+* Display name and path to the moutpoint have to be provide, you can 
+*/
 $disks[] = array("name" => "local" , "path" => getcwd()) ;
+// $disks[] = array("name" => "Your disk name" , "path" => '/mount/point/to/that/disk') ;
+
+
 $data1 .= "<tr><td>Disk free        </td><td>" . get_disk_free_status($disks) . "</td></tr>";
 
 $data1 .= "<tr><td>RAM free        </td><td>". format_storage_info($total_mem *1024, $free_mem *1024, '') ."</td></tr>";
-$data1 .= "<tr><td>Top RAM user    </td><td>$top_mem         </td></tr>";
-$data1 .= "<tr><td>Top CPU user    </td><td>$top_cpu         </td></tr>";
+$data1 .= "<tr><td>Top RAM user    </td><td><small>$top_mem</small></td></tr>";
+$data1 .= "<tr><td>Top CPU user    </td><td><small>$top_cpu</small></td></tr>";
 
 $data1 .= "</table>";
 $data1 .= '
@@ -241,22 +253,37 @@ if (!isset($_GET['showtraffic']) || $_GET['showtraffic'] ==  false) die();
 
 $data2 = "";
 $data2 .=  '
-<div class="card">
+<div class="card mb-2">
   <h4 class="card-header text-center">
     vnstat Network traffic
   </h4>
   <div class="card-body">
 ';
 
-$data2 .= "<table  class='table table-sm '>";
-$data2 .="<tr><td><pre>";
+
+$data2 .="<span class=' d-block'><pre class='d-inline-block text-left'>";
 $traffic_arr = array();
 exec('vnstat -' . $_GET['showtraffic'], $traffic_arr, $status);
 
+///for testing
+$traffic = "
+enp0s20  /  monthly
+
+month        rx      |     tx      |    total    |   avg. rate
+------------------------+-------------+-------------+---------------
+Sep '18     36.60 GiB |    7.04 GiB |   43.64 GiB |  144.62 kbit/s
+Oct '18    400.69 GiB |    1.19 TiB |    1.58 TiB |    5.19 Mbit/s
+Nov '18    393.52 GiB |    2.19 TiB |    2.57 TiB |    8.72 Mbit/s
+Dec '18    507.28 GiB |    2.05 TiB |    2.55 TiB |    8.37 Mbit/s
+Jan '19    269.01 GiB |    1.39 TiB |    1.65 TiB |    7.51 Mbit/s
+------------------------+-------------+-------------+---------------
+estimated    371.92 GiB |    1.92 TiB |    2.29 TiB |
+";
+/// for real
 $traffic = implode("\n", $traffic_arr);
 
-$data2 .="$traffic</pre></td></tr>";
-$data2 .='</table>';
+$data2 .="$traffic</pre></span>";
+
 echo $data2;
 ?>
 </div></html>
