@@ -63,7 +63,6 @@ Each service can have a name, port and the Unix domain it run on (default to loc
 */
 $services = array();
 
-
 $services[] = array("port" => "9000",       "service" => "php-fpm",                  "ip" => "") ;
 $services[] = array("port" => "80",       "service" => "Nginx",                  "ip" => "51.15.1.76") ;
 $services[] = array("port" => "6379",       "service" => "Redis",                  "ip" => "") ;
