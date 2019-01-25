@@ -261,7 +261,7 @@ $data2 .=  '
 ';
 
 
-$data2 .="<span class=' d-block'><pre class='d-inline-block text-left'>";
+$data2 .="<span class=' d-block'><pre class='d-inline-block text-left'><small>";
 $traffic_arr = array();
 exec('vnstat -' . $_GET['showtraffic'], $traffic_arr, $status);
 
@@ -282,7 +282,7 @@ estimated    371.92 GiB |    1.92 TiB |    2.29 TiB |
 /// for real
 $traffic = implode("\n", $traffic_arr);
 
-$data2 .="$traffic</pre></span>";
+$data2 .="$traffic</small></pre></span>";
 
 echo $data2;
 ?>
