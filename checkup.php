@@ -51,9 +51,9 @@ Original author:
 $data = "";
 $data .= '
 <div class="card my-2">
-  <h6 class="card-header text-center">
+  <h4 class="card-header text-center">
     Service status
-  </h6>
+  </h4>
   <div class="card-body pb-0">
 ';
 
@@ -119,10 +119,10 @@ echo $data;
 $data1 = "";
 $data1 .= '
 <div class="card mb-2">
-  <h6 class="card-header text-center">
-    Service status
-  </h6>
-  <div class="card-body pb-0">
+  <h4 class="card-header text-center">
+    Server information
+  </h4>
+  <div class="card-body">
 ';
 
 
@@ -263,14 +263,14 @@ if (!isset($_GET['showtraffic']) || $_GET['showtraffic'] ==  false) die();
 $data2 = "";
 $data2 .=  '
 <div class="card mb-2">
-  <h6 class="card-header text-center">
-    Service status
-  </h6>
+  <h4 class="card-header text-center">
+    vnstat Network traffic
+  </h4>
   <div class="card-body text-center">
 ';
 
 
-$data2 .="<span class=' d-block'><pre class='d-inline-block text-left'>";
+$data2 .="<span class=' d-block'><pre class='d-inline-block text-left'><small>";
 $traffic_arr = array();
 exec('vnstat -' . $_GET['showtraffic'], $traffic_arr, $status);
 
@@ -291,7 +291,7 @@ estimated    371.92 GiB |    1.92 TiB |    2.29 TiB |
 /// for real
 $traffic = implode("\n", $traffic_arr);
 
-$data2 .="$traffic</pre></span>";
+$data2 .="$traffic</small></pre></span>";
 
 echo $data2;
 ?>
