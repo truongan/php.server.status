@@ -69,6 +69,8 @@ $services[] = array("port" => "80",       "service" => "Nginx",                 
 $services[] = array("port" => "6379",       "service" => "Redis",                  "ip" => "") ;
 $services[] = array("port" => "21",       "service" => "FTP",                     "ip" => "") ;
 $services[] = array("port" => "3306",     "service" => "MYSQL",                   "ip" => "") ;
+// $services[] = array("port" => "3000",     "service" => "Mastodon web",                   "ip" => "") ;
+// $services[] = array("port" => "4000",     "service" => "Mastodon streaming",                   "ip" => "") ;
 $services[] = array("port" => "22",       "service" => "Open SSH",				"ip" => "") ;
 $services[] = array("port" => "7690",     "service" => "Deluge",             	"ip" => "") ;
 $services[] = array("port" => "8112",     "service" => "Deluge Web",             	"ip" => "") ;
@@ -82,13 +84,14 @@ foreach ($services  as $service) {
 	if($service['ip']==""){
 	   $service['ip'] = "localhost";
 	}
+	$data .= "<tr><td>" . $service['service'] . "</td><td>". $service['port'];
 
 	$fp = @fsockopen($service['ip'], $service['port'], $errno, $errstr, $timeout);
 	if (!$fp) {
-		$data .= "<tr ><td>" . $service['service'] . "</td><td>". $service['port']."</td><td class='table-danger'>Offline </td></tr>";
+		$data .= "</td><td class='table-danger'>Offline </td></tr>";
 	  //fclose($fp);
 	} else {
-		$data .= "<tr><td>" . $service['service'] . "</td><td>". $service['port']."</td><td class='table-success'>Online</td></tr>";
+		$data .= "</td><td class='table-success'>Online</td></tr>";
 		fclose($fp);
 	}
 
@@ -118,8 +121,7 @@ $data1 .= '
   <div class="card-body">
 ';
 
-
-$data1 .= "<table  class='table table-sm mb-0'>";
+$data1 .= "<div class='table-responsive'><table  class='table table-sm mb-0'>";
 
 //GET SERVER LOADS
 $loadresult = @exec('uptime');  
@@ -206,15 +208,15 @@ $i = 5;
 -o to specify output format, it's a list of column name. = suppress the display of column name
 head to get only the first few lines 
 */
-exec("ps -e k-rss -ocomm=,rss= | head -n $i", $tom_mem_arr, $status);
-exec("ps -e k-pcpu -ocomm=,pcpu= | head -n $i", $top_cpu_use, $status);
+exec("ps -e k-rss -o rss,args | head -n $i", $tom_mem_arr, $status);
+exec("ps -e k-pcpu -o pcpu,args | head -n $i", $top_cpu_use, $status);
 
 
-$top_mem = implode(' KiB <br/>', $tom_mem_arr );
-$top_mem = "<pre class='mb-0'><b>COMMAND\t\tResident memory</b><br/>" . $top_mem . " KiB</pre>";
+$top_mem = implode('<br/>', $tom_mem_arr );
+$top_mem = "<pre class='mb-0'>" . $top_mem . "</pre>";
 
-$top_cpu = implode(' % <br/>', $top_cpu_use );
-$top_cpu = "<pre class='mb-0'><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " %</pre>";
+$top_cpu = implode('<br/>', $top_cpu_use );
+$top_cpu = "<pre class='mb-0'><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. "</pre>";
 
 $data1 .= "<tr><td>Average load</td><td><h5>". badge($avgs[1],'secondary'). ' ' .badge($avgs[2], 'secondary') . ' ' . badge( $avgs[3], 'secondary') . " </h5></td>\n";
 $data1 .= "<tr><td>Uptime</td><td>$uptime                     </td></tr>";
