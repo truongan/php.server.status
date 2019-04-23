@@ -69,8 +69,8 @@ $services[] = array("port" => "80",       "service" => "Nginx",                 
 $services[] = array("port" => "6379",       "service" => "Redis",                  "ip" => "") ;
 $services[] = array("port" => "21",       "service" => "FTP",                     "ip" => "") ;
 $services[] = array("port" => "3306",     "service" => "MYSQL",                   "ip" => "") ;
-// $services[] = array("port" => "3000",     "service" => "Mastodon web",                   "ip" => "") ;
-// $services[] = array("port" => "4000",     "service" => "Mastodon streaming",                   "ip" => "") ;
+$services[] = array("port" => "3000",     "service" => "Mastodon web",                   "ip" => "") ;
+$services[] = array("port" => "4000",     "service" => "Mastodon streaming",                   "ip" => "") ;
 $services[] = array("port" => "22",       "service" => "Open SSH",				"ip" => "") ;
 $services[] = array("port" => "7690",     "service" => "Deluge",             	"ip" => "") ;
 $services[] = array("port" => "8112",     "service" => "Deluge Web",             	"ip" => "") ;
@@ -199,7 +199,7 @@ $tom_mem_arr = array();
 $top_cpu_use = array();
 
 //-- The number of processes to display in Top RAM user
-$i = 5;
+$i = 9;
 
 
 /* ps command:
