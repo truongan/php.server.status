@@ -109,7 +109,7 @@ $data1 .= "
 	 </div>  
    </center><BR>";
 
-$data1 .= "<table width='480' border='1' cellspacing='0' cellpadding='3' style='border-collapse:collapse'  
+$data1 .= "<div class='container-fluid table-responsive'><table width='480' border='1' cellspacing='0' cellpadding='3' style='border-collapse:collapse'  
 
 bordercolor='#333333' align='center'>";
 
@@ -163,12 +163,12 @@ $i = 5;
 head to get only the first few lines 
 	
 */
-exec("ps -e k-rss -ocomm=,rss= | head -n $i", $tom_mem_arr, $status);
+exec("ps -e k-rss -o rss,args", $tom_mem_arr, $status);
 exec("ps -e k-pcpu -ocomm=,pcpu= | head -n $i", $top_cpu_use, $status);
 
 
-$top_mem = implode(' KiB <br/>', $tom_mem_arr );
-$top_mem = "<pre><b>COMMAND\t\tResident memory</b><br/>" . $top_mem . " KiB</pre>";
+$top_mem = implode('<br/>', $tom_mem_arr );
+$top_mem = "<pre><b>Resident memory (KiB)</b><br/>" . $top_mem . " KiB</pre>";
 
 $top_cpu = implode(' % <br/>', $top_cpu_use );
 $top_cpu = "<pre><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. " %</pre>";
@@ -179,7 +179,7 @@ $data1 .= "<tr><td>Disk free        </td><td>$disk_free / $disk_space = $disk_fr
 $data1 .= "<tr><td>RAM free        </td><td>$free_mem / $total_mem = $free_mem_percent%         </td></tr>";
 $data1 .= "<tr><td>Top RAM user    </td><td>$top_mem         </td></tr>";
 $data1 .= "<tr><td>Top CPU user    </td><td>$top_cpu         </td></tr>";
-$data1 .= "</table>";
+$data1 .= "</table></div>";
 echo $data1;  
 
 /*
