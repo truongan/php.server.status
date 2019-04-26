@@ -5,8 +5,22 @@
 	<meta content="text/html" charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 	<link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
 	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">?> -->
+
+	<style>
+pre {
+    overflow-x: auto;
+	max-width: 60vw;
+}
+
+pre code {
+    word-wrap: normal;
+    white-space: pre;
+}
+	</style>
+
 </head>
 <html><div class="container">
 <?php
@@ -121,7 +135,8 @@ $data1 .= '
   <div class="card-body">
 ';
 
-$data1 .= "<div class='table-responsive'><table  class='table table-sm mb-0'>";
+$data1 .= "<table  class='table table-sm mb-0'>";
+// $data1 .= "<div class='table-responsive'><table  class='table table-sm mb-0'>";
 
 //GET SERVER LOADS
 $loadresult = @exec('uptime');  
@@ -213,10 +228,10 @@ exec("ps -e k-pcpu -o pcpu,args | head -n $i", $top_cpu_use, $status);
 
 
 $top_mem = implode('<br/>', $tom_mem_arr );
-$top_mem = "<pre class='mb-0'>" . $top_mem . "</pre>";
+$top_mem = "<pre class='mb-0 '><code>" . $top_mem . "</code></pre>";
 
 $top_cpu = implode('<br/>', $top_cpu_use );
-$top_cpu = "<pre class='mb-0'><b>COMMAND\t\tCPU utilization </b><br/>" . $top_cpu. "</pre>";
+$top_cpu = "<pre class='mb-0 '><code>" . $top_cpu. "</code></pre>";
 
 $data1 .= "<tr><td>Average load</td><td><h5>". badge($avgs[1],'secondary'). ' ' .badge($avgs[2], 'secondary') . ' ' . badge( $avgs[3], 'secondary') . " </h5></td>\n";
 $data1 .= "<tr><td>Uptime</td><td>$uptime                     </td></tr>";
@@ -239,10 +254,8 @@ $data1 .= "<tr><td>Top RAM user    </td><td><small>$top_mem</small></td></tr>";
 $data1 .= "<tr><td>Top CPU user    </td><td><small>$top_cpu</small></td></tr>";
 
 $data1 .= "</table>";
-$data1 .= '
-  </div>
-</div>
-';
+// $data1 .= '  </div></div>';
+$data1 .= '  </div>';
 echo $data1;  
 
 /* =============================================================================
