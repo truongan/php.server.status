@@ -275,7 +275,7 @@ $data2 .=  '
 
 $data2 .="<span class=' d-block'><pre class='d-inline-block text-left'><small>";
 $traffic_arr = array();
-exec('vnstat -' . $_GET['showtraffic'], $traffic_arr, $status);
+exec('vnstat -' . escapeshellarg( $_GET['showtraffic'] ), $traffic_arr, $status);
 
 ///for testing
 $traffic = "
