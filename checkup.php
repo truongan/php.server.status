@@ -5,7 +5,7 @@
 	<meta content="text/html" charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-L1anLVP0mHy8N7+JjFaPC6bdKXBcXcjc8tnnCVtuTetLiWsN/mF9NE0mkMhQGVv8" crossorigin="anonymous">
 	<style>
 pre {
     overflow-x: auto;
@@ -32,13 +32,13 @@ pre code {
  * Jul 27, 2013
 
 Original author:
-*       Disclaimer Notice(s)                                                          
-*       ex: This code is freely given to you and given "AS IS", SO if it damages      
+*       Disclaimer Notice(s)
+*       ex: This code is freely given to you and given "AS IS", SO if it damages
 *       your computer, formats your HDs, or burns your house I am not the one to
-*       blame.                                                                     
-*       Moreover, don't forget to include my copyright notices and name.               
+*       blame.
+*       Moreover, don't forget to include my copyright notices and name.
 *   +------------------------------------------------------------------------------+
-*       Author(s): Crooty.co.uk (Adam C)                                    
+*       Author(s): Crooty.co.uk (Adam C)
 *   +------------------------------------------------------------------------------+
 
 	This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ Original author:
 
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/  
+*/
 $data = "";
 $data .= '
 <div class="card my-2">
@@ -68,7 +68,7 @@ $data .= '
 $timeout = "1";
 
 //set service checks
-/* 
+/*
 The script will open a socket to the following service to test for connection.
 Does not test the fucntionality, just the ability to connect
 Each service can have a name, port and the Unix domain it run on (default to localhost)
@@ -106,7 +106,7 @@ foreach ($services  as $service) {
 		fclose($fp);
 	}
 
-}  
+}
 //close table
 $data .= "</table></small>";
 $data .= '
@@ -136,7 +136,7 @@ $data1 .= "<table  class='table table-sm mb-0'>";
 // $data1 .= "<div class='table-responsive'><table  class='table table-sm mb-0'>";
 
 //GET SERVER LOADS
-$loadresult = @exec('uptime');  
+$loadresult = @exec('uptime');
 preg_match("/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/",$loadresult,$avgs);
 
 
@@ -149,7 +149,7 @@ $uptime = $uptime[0].', '.$uptime[1];
 function getSymbolByQuantity($bytes) {
 	$symbol = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB');
 	$exp = floor(log($bytes)/log(1024));
-	
+
 	return sprintf('%.2f<small>'.$symbol[$exp].'</small>', ($bytes/pow(1024, floor($exp))));
 }
 function percent_to_color($p){
@@ -163,7 +163,7 @@ function format_storage_info($disk_space, $disk_free, $disk_name){
 	$str = "";
 	$disk_free_precent = 100 - round($disk_free*1.0 / $disk_space*100, 2);
 		$str .= '<div class="col p-0 d-inline-flex">';
-		$str .= "<span class='mr-2'>" . badge($disk_name,'secondary') .' '. getSymbolByQuantity($disk_free) . '/'. getSymbolByQuantity($disk_space) ."</span>";
+		$str .= "<span class='me-2'>" . badge($disk_name,'secondary') .' '. getSymbolByQuantity($disk_free) . '/'. getSymbolByQuantity($disk_space) ."</span>";
 		$str .= '
 <div class="progress flex-grow-1 align-self-center">
   <div class="progress-bar progress-bar-striped progress-bar-animated ';
@@ -180,10 +180,10 @@ function get_disk_free_status($disks){
 	$str="";
 	$max = 5;
 	foreach($disks as $disk){
-		if(strlen($disk["name"]) > $max) 
+		if(strlen($disk["name"]) > $max)
 			$max = strlen($disk["name"]);
 	}
-	
+
 	foreach($disks as $disk){
 		$disk_space = disk_total_space($disk["path"]);
 		$disk_free = disk_free_space($disk["path"]);
@@ -194,7 +194,7 @@ function get_disk_free_status($disks){
 	return $str;
 }
 function badge($str, $type){
-	return "<span class='badge badge-" . $type . " ' >$str</span>";
+	return "<span class='badge bg-" . $type . " ' >$str</span>";
 }
 
 //Get ram usage
@@ -218,7 +218,7 @@ $i = 9;
 -e to display process from all user
 -k to specify sorting order: - is desc order follow by column name
 -o to specify output format, it's a list of column name. = suppress the display of column name
-head to get only the first few lines 
+head to get only the first few lines
 */
 exec("ps -e k-rss -o rss,args | head -n $i", $tom_mem_arr, $status);
 exec("ps -e k-pcpu -o pcpu,args | head -n $i", $top_cpu_use, $status);
@@ -238,7 +238,7 @@ $disks = array();
 
 /*
 * The disks array list all mountpoint you wan to check freespace
-* Display name and path to the moutpoint have to be provide, you can 
+* Display name and path to the moutpoint have to be provide, you can
 */
 $disks[] = array("name" => "local" , "path" => getcwd()) ;
 // $disks[] = array("name" => "Your disk name" , "path" => '/mount/point/to/that/disk') ;
@@ -253,7 +253,7 @@ $data1 .= "<tr><td>Top CPU user    </td><td><small>$top_cpu</small></td></tr>";
 $data1 .= "</table>";
 // $data1 .= '  </div></div>';
 $data1 .= '  </div>';
-echo $data1;  
+echo $data1;
 
 /* =============================================================================
 *
@@ -275,9 +275,10 @@ $data2 .=  '
 ';
 
 
-$data2 .="<span class=' d-block'><pre class='d-inline-block text-left'><small>";
+$data2 .="<span class=' d-block'><pre class='d-inline-block text-start'><small>";
 $traffic_arr = array();
-exec('vnstat -' . escapeshellarg( $_GET['showtraffic'] ), $traffic_arr, $status);
+if (!in_array($_GET['showtraffic'], array('h','d','m','w','t','5','hg','s'), true)) die();
+exec('vnstat -' . $_GET['showtraffic'], $traffic_arr, $status);
 
 ///for testing
 $traffic = "
