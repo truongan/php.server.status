@@ -5,7 +5,7 @@
 	<meta content="text/html" charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-L1anLVP0mHy8N7+JjFaPC6bdKXBcXcjc8tnnCVtuTetLiWsN/mF9NE0mkMhQGVv8" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/pulse/bootstrap.min.css" rel="stylesheet" integrity="sha384-s1beQxR3MhCcfAHT7ulQXJiGt1ejAnXU2LMI2I+23+ty05iA1rf+jsy5WiWJOnms" crossorigin="anonymous">
 	<script>
 	const getTheme=()=>localStorage.getItem('theme')||'auto';
 	const apply=t=>document.documentElement.setAttribute('data-bs-theme',t==='auto'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t);
@@ -14,10 +14,8 @@
 	addEventListener('DOMContentLoaded',()=>{mark(getTheme());document.querySelectorAll('[data-bs-theme-value]').forEach(b=>b.onclick=()=>{const t=b.dataset.bsThemeValue;localStorage.setItem('theme',t);apply(t);mark(t);});});
 	</script>
 	<style>
-pre {
-    overflow-x: auto;
-	max-width: 60vw;
-}
+table.info { table-layout: fixed; }
+table.info td:first-child { width: 12rem; white-space: nowrap; }
 
 pre code {
     word-wrap: normal;
@@ -147,7 +145,7 @@ $data1 .= '
   <div class="card-body">
 ';
 
-$data1 .= "<table  class='table table-sm mb-0'>";
+$data1 .= "<table  class='table table-sm mb-0 info'>";
 // $data1 .= "<div class='table-responsive'><table  class='table table-sm mb-0'>";
 
 //GET SERVER LOADS
@@ -262,8 +260,8 @@ $disks[] = array("name" => "local" , "path" => getcwd()) ;
 $data1 .= "<tr><td>Disk free        </td><td>" . get_disk_free_status($disks) . "</td></tr>";
 
 $data1 .= "<tr><td>RAM free        </td><td>". format_storage_info($total_mem *1024, $free_mem *1024, '') ."</td></tr>";
-$data1 .= "<tr><td>Top RAM user    </td><td><small>$top_mem</small></td></tr>";
-$data1 .= "<tr><td>Top CPU user    </td><td><small>$top_cpu</small></td></tr>";
+$data1 .= "<tr><td>Top RAM user    </td><td><small class='d-block' style='overflow-x:auto'>$top_mem</small></td></tr>";
+$data1 .= "<tr><td>Top CPU user    </td><td><small class='d-block' style='overflow-x:auto'>$top_cpu</small></td></tr>";
 
 $data1 .= "</table>";
 // $data1 .= '  </div></div>';
