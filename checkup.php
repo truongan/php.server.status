@@ -162,7 +162,7 @@ function percent_to_color($p){
 function format_storage_info($disk_space, $disk_free, $disk_name){
 	$str = "";
 	$disk_free_precent = 100 - round($disk_free*1.0 / $disk_space*100, 2);
-		$str .= '<div class="col p-0 d-inline-flex">';
+		$str .= '<div class="col p-0 d-flex">';
 		$str .= "<span class='me-2'>" . badge($disk_name,'secondary') .' '. getSymbolByQuantity($disk_free) . '/'. getSymbolByQuantity($disk_space) ."</span>";
 		$str .= '
 <div class="progress flex-grow-1 align-self-center">
