@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
 	<title>Server status</title>
 	<meta content="text/html" charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-L1anLVP0mHy8N7+JjFaPC6bdKXBcXcjc8tnnCVtuTetLiWsN/mF9NE0mkMhQGVv8" crossorigin="anonymous">
+	<script>
+	const getTheme=()=>localStorage.getItem('theme')||'auto';
+	const apply=t=>document.documentElement.setAttribute('data-bs-theme',t==='auto'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t);
+	const mark=t=>document.querySelectorAll('[data-bs-theme-value]').forEach(b=>b.classList.toggle('active',b.dataset.bsThemeValue===t));
+	apply(getTheme());
+	addEventListener('DOMContentLoaded',()=>{mark(getTheme());document.querySelectorAll('[data-bs-theme-value]').forEach(b=>b.onclick=()=>{const t=b.dataset.bsThemeValue;localStorage.setItem('theme',t);apply(t);mark(t);});});
+	</script>
 	<style>
 pre {
     overflow-x: auto;
@@ -16,10 +23,18 @@ pre code {
     word-wrap: normal;
     white-space: pre;
 }
+#theme-toggle .btn { font-size: 1.6rem; line-height: 1; }
+#theme-toggle .btn:not(.active) { display: none; }
+#theme-toggle:hover .btn { display: inline-block; }
 	</style>
 
 </head>
 <html><div class="container">
+<div id="theme-toggle" class="btn-group btn-group-lg position-fixed top-0 end-0 m-2" style="z-index:1050" role="group" aria-label="Theme">
+  <button type="button" class="btn btn-secondary" data-bs-theme-value="light" title="Light" aria-label="Light">☀</button>
+  <button type="button" class="btn btn-secondary" data-bs-theme-value="dark" title="Dark" aria-label="Dark">☾</button>
+  <button type="button" class="btn btn-secondary" data-bs-theme-value="auto" title="Auto" aria-label="Auto">◐</button>
+</div>
 <?php
 /*
 
