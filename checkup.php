@@ -5,7 +5,7 @@
 	<meta content="text/html" charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/pulse/bootstrap.min.css" rel="stylesheet" integrity="sha384-s1beQxR3MhCcfAHT7ulQXJiGt1ejAnXU2LMI2I+23+ty05iA1rf+jsy5WiWJOnms" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.8/dist/morph/bootstrap.min.css" rel="stylesheet" integrity="sha384-x8ZzaWWeiHoeOKxzqViigGot3Uxq/86QdU4PmdzkDbpvqikfiztn9NXAOe9VoDn/" crossorigin="anonymous">
 	<script>
 	const getTheme=()=>localStorage.getItem('theme')||'auto';
 	const apply=t=>document.documentElement.setAttribute('data-bs-theme',t==='auto'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t);
